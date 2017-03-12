@@ -1,0 +1,9 @@
+# .madness.yml
+---
+path: '.'
+port: '2222'
+bind: '0.0.0.0'
+autoh1: false
+highlighter: true
+line_numbers: true
+index: false
