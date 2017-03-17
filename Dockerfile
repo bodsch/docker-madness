@@ -27,13 +27,10 @@ RUN \
     ruby-dev \
     zlib-dev && \
   cd /srv && \
-  git clone https://github.com/bodsch/madness && \
-  cd /srv/madness && \
-  gem build madness.gemspec && \
+  git clone https://github.com/bodsch/ruby-markdown-service && \
   gem install --no-rdoc --no-ri \
-    ./madness-0.2.1.gem \
-    bundler && \
-  bundler install && \
+    sinatra \
+    redcarpet && \
   apk del --purge \
     build-base \
     git \
@@ -45,4 +42,6 @@ COPY rootfs /
 
 WORKDIR "/var/www"
 
-ENTRYPOINT [ "/usr/bin/madness" ]
+CMD [ "/bin/sh" ]
+
+# ENTRYPOINT [ "/usr/bin/madness" ]
