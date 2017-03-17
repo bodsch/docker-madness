@@ -1,6 +1,6 @@
 
-CONTAINER  := madness
-IMAGE_NAME := docker-madness
+CONTAINER  := markdown-service
+IMAGE_NAME := docker-markdown-service
 
 build:
 	docker build \

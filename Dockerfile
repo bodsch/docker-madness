@@ -42,6 +42,5 @@ COPY rootfs /
 
 WORKDIR "/var/www"
 
-CMD [ "/bin/sh" ]
 
-# ENTRYPOINT [ "/usr/bin/madness" ]
+ENTRYPOINT [ "/srv/ruby-markdown-service/bin/markdown.rb" ]
