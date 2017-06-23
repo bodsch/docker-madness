@@ -1,15 +1,27 @@
-FROM alpine:latest
+
+FROM alpine:3.6
 
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
-LABEL version="1703-02"
-
 ENV \
-  ALPINE_MIRROR="dl-cdn.alpinelinux.org" \
-  ALPINE_VERSION="v3.5" \
+  ALPINE_MIRROR="mirror1.hs-esslingen.de/pub/Mirrors" \
+  ALPINE_VERSION="v3.6" \
   TERM=xterm
 
 EXPOSE 2222
+
+LABEL \
+  version="1706-04.1" \
+  org.label-schema.build-date=${BUILD_DATE} \
+  org.label-schema.name="Markdown Service" \
+  org.label-schema.description="Docker Image for an markdown Server" \
+  org.label-schema.url="https://github.com/bodsch/ruby-markdown-service" \
+  org.label-schema.vcs-url="https://github.com/bodsch/docker-markdown-service" \
+  org.label-schema.vendor="Bodo Schulz" \
+  org.label-schema.version="1.0" \
+  org.label-schema.schema-version="1.0" \
+  com.microscaling.docker.dockerfile="/Dockerfile" \
+  com.microscaling.license="unlicense"
 
 # ---------------------------------------------------------------------------------------
 
