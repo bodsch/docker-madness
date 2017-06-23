@@ -1,0 +1,11 @@
+ PORTS = \
+  --publish 2222:2222
+
+VOLUMES = \
+  --volume /var/log/docker:/var/log
+
+ENV = \
+  --env PUBLIC_FOLDER="/var/www" \
+  --env PORT=2222 \
+  --env BIND_TO="0.0.0.0" \
+  --env STYLESHEET="style.css"
