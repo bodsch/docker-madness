@@ -11,7 +11,7 @@ ENV \
 EXPOSE 2222
 
 LABEL \
-  version="1707-27.1" \
+  version="1708-35" \
   org.label-schema.build-date=${BUILD_DATE} \
   org.label-schema.name="Markdown Service" \
   org.label-schema.description="Docker Image for an markdown Server" \
