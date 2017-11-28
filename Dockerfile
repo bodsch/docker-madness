@@ -33,6 +33,7 @@ RUN \
     ruby-dev \
     zlib-dev && \
   apk add --no-cache \
+    curl \
     ruby-io-console \
     ruby-rdoc && \
   cd /srv && \
