@@ -4,10 +4,8 @@ FROM alpine:3.6
 MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
 
 ENV \
-  ALPINE_MIRROR="mirror1.hs-esslingen.de/pub/Mirrors" \
-  ALPINE_VERSION="v3.6" \
   TERM=xterm \
-  BUILD_DATE="2017-11-06"
+  BUILD_DATE="2017-11-28"
 
 EXPOSE 2222
 
@@ -27,27 +25,22 @@ LABEL \
 # ---------------------------------------------------------------------------------------
 
 RUN \
-  echo "http://${ALPINE_MIRROR}/alpine/${ALPINE_VERSION}/main"       > /etc/apk/repositories && \
-  echo "http://${ALPINE_MIRROR}/alpine/${ALPINE_VERSION}/community" >> /etc/apk/repositories && \
-  apk --no-cache update && \
-  apk --no-cache upgrade && \
-  apk --no-cache add \
+  apk update --no-cache && \
+  apk upgrade --no-cache && \
+  apk add --quiet --no-cache --virtual .build-deps \
     build-base \
     git \
-    ruby-io-console \
-    ruby-rdoc \
     ruby-dev \
     zlib-dev && \
+  apk add --no-cache \
+    ruby-io-console \
+    ruby-rdoc && \
   cd /srv && \
   git clone https://github.com/bodsch/ruby-markdown-service && \
   gem install --no-rdoc --no-ri \
     sinatra \
     redcarpet && \
-  apk del --purge \
-    build-base \
-    git \
-    ruby-dev \
-    zlib-dev && \
+  apk del --quiet .build-deps && \
   rm -rf \
     /srv/ruby-markdown-service/.git \
     /tmp/* \
@@ -55,6 +48,14 @@ RUN \
 
 COPY rootfs /
 
-WORKDIR "/var/www"
+WORKDIR /var/www
+
+VOLUME /var/www
+
+HEALTHCHECK \
+  --interval=5s \
+  --timeout=2s \
+  --retries=12 \
+  CMD curl --silent --fail http://localhost:2222/health || exit 1
 
 ENTRYPOINT [ "/srv/ruby-markdown-service/bin/markdown.rb" ]
