@@ -4,8 +4,16 @@ services:
   - docker
 
 install:
-  - docker build --tag bodsch/docker-madness .
-  - docker run --detach --name grafana bodsch/docker-madness
+  - docker build --tag bodsch/docker-markdown-service .
+  - docker run --detach --name markdown-service bodsch/docker-markdown-service
 
 script:
-  - docker ps | grep -q madness
+  - docker ps | grep -q markdown-service
+
+after_success:
+  - |
+    [ "${TRAVIS_BRANCH}" == "master" ] && curl \
+      --request POST \
+      --header "Content-Type: application/json"  \
+      --data '{"source_type":"Branch","source_name":"master"}' \
+      https://registry.hub.docker.com/u/bodsch/docker-markdown-service/trigger/${DOCKER_HUB_TOKEN}/
