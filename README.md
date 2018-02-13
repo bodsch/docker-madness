@@ -15,14 +15,14 @@ sinatra based
 [microbadger]: https://microbadger.com/images/bodsch/docker-markdown-service
 [travis]: https://travis-ci.org/bodsch/docker-markdown-service
 
-# supported Environment Vars
+# supported Environment Variables
 
-    PUBLIC_FOLDER
-    PORTS
-    BIND_TO
-    STYLESHEET
+- `PUBLIC_FOLDER` (default: `/var/www`)
+- `PORTS` (default: `8080`)
+- `BIND_TO` (default: `0.0.0.0`)
+- `STYLESHEET` (default: `style.css`)
 
 
 # Ports
 
- - `2222`: Web-Server
+- `8080`: Web-Server

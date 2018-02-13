@@ -1,16 +1,14 @@
 
-FROM alpine:3.6
-
-MAINTAINER Bodo Schulz <bodo@boone-schulz.de>
+FROM alpine:3.7
 
 ENV \
-  TERM=xterm \
-  BUILD_DATE="2017-11-28"
+  BUILD_DATE="2018-02-13"
 
-EXPOSE 2222
+EXPOSE 8080
 
 LABEL \
-  version="1711" \
+  version="1802" \
+  maintainer="Bodo Schulz <bodo@boone-schulz.de>" \
   org.label-schema.build-date=${BUILD_DATE} \
   org.label-schema.name="Markdown Service" \
   org.label-schema.description="Docker Image for an markdown Server" \
@@ -25,8 +23,8 @@ LABEL \
 # ---------------------------------------------------------------------------------------
 
 RUN \
-  apk update --no-cache && \
-  apk upgrade --no-cache && \
+  apk update --quiet --no-cache && \
+  apk upgrade --quiet --no-cache && \
   apk add --quiet --no-cache --virtual .build-deps \
     build-base \
     git \
@@ -40,6 +38,7 @@ RUN \
   git clone https://github.com/bodsch/ruby-markdown-service && \
   gem install --no-rdoc --no-ri \
     sinatra \
+    puma \
     redcarpet && \
   apk del --quiet .build-deps && \
   rm -rf \
@@ -49,7 +48,7 @@ RUN \
 
 COPY rootfs /
 
-WORKDIR /var/www
+WORKDIR /srv/ruby-markdown-service
 
 VOLUME /var/www
 
@@ -57,6 +56,6 @@ HEALTHCHECK \
   --interval=5s \
   --timeout=2s \
   --retries=12 \
-  CMD curl --silent --fail http://localhost:2222/health || exit 1
+  CMD curl --silent --fail http://localhost:8080/health || exit 1
 
 ENTRYPOINT [ "/srv/ruby-markdown-service/bin/markdown.rb" ]

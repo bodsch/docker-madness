@@ -14,6 +14,9 @@ INSTANCE = default
 build:
 	docker build \
 		--rm \
+		--force-rm \
+		--compress \
+		--no-cache \
 		--tag $(NS)/$(REPO):$(VERSION) .
 
 clean:

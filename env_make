@@ -1,11 +1,12 @@
  PORTS = \
-  --publish 2222:2222
+  --publish 8080:8080
 
-VOLUMES = \
-  --volume /var/log/docker:/var/log
+#VOLUMES = \
+#  --volume /var/log/docker:/var/log
 
 ENV = \
+  --env LOG_LEVEL='debug' \
   --env PUBLIC_FOLDER="/var/www" \
-  --env PORT=2222 \
+  --env PORT=8080 \
   --env BIND_TO="0.0.0.0" \
   --env STYLESHEET="style.css"
