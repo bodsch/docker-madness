@@ -1,8 +1,8 @@
 
-FROM alpine:3.7
+FROM alpine:latest
 
 ENV \
-  BUILD_DATE="2018-02-13"
+  BUILD_DATE="2018-06-01"
 
 EXPOSE 8080
 
@@ -28,18 +28,20 @@ RUN \
   apk add --quiet --no-cache --virtual .build-deps \
     build-base \
     git \
+    file-dev \
     ruby-dev \
     zlib-dev && \
   apk add --no-cache \
     curl \
+    file \
     ruby-io-console \
     ruby-rdoc && \
+  echo 'gem: --no-document' >> /etc/gemrc && \
+  gem install --no-rdoc --no-ri --quiet bundle && \
   cd /srv && \
   git clone https://github.com/bodsch/ruby-markdown-service && \
-  gem install --no-rdoc --no-ri \
-    sinatra \
-    puma \
-    redcarpet && \
+  cd ruby-markdown-service && \
+  bundle update --quiet && \
   apk del --quiet .build-deps && \
   rm -rf \
     /srv/ruby-markdown-service/.git \

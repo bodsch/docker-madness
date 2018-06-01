@@ -1,8 +1,9 @@
  PORTS = \
   --publish 8080:8080
 
-#VOLUMES = \
-#  --volume /var/log/docker:/var/log
+VOLUMES = \
+  --volume /var/log/docker:/var/log \
+  --volume /var/www:/var/www
 
 ENV = \
   --env LOG_LEVEL='debug' \
